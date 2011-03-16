@@ -1,0 +1,38 @@
+﻿.scroll-wrapper{
+    height: 400px;
+    overflow:hidden;  
+}
+.scroll-block {
+    height:400px;
+    top:0px;
+}
+
+.scroll-block .block{
+    display: block;
+    padding: 0;
+    margin: 0;
+    width:200px;
+    height:200px;
+}
+
+
+
+.scroll-down{
+    background:;
+    height: 40px;
+    width: 200px;     
+    position:relative;
+    top:360px;     
+    background:#eeeeee url('../images/down.png') no-repeat;
+    background-position:center;
+    opacity:0.1;
+} 
+.scroll-up{
+    height: 40px;
+    width: 200px;     
+    position:absolute;
+    background:purple;  
+    background:#eeeeee url('../images/up.png') no-repeat;
+    background-position:center;
+    opacity:0.1;
+}
