@@ -76,15 +76,17 @@ POSSIBILITY OF SUCH DAMAGE.
         // Прозрачность при наведении мышки
         this.opacityHover = options.opacityHover;
         
+        // ( Костыль ) Высотакнопки прокрутки
+        this.scrollButtonHeight = options.scrollButtonHeight;
         
         // Обработка событий поподания в облать кнопк вверх 
         $( this.down ).hover(
-            function(){
+            function() {
                 $( this.down ).css( 'opacity', '0.6' );
                 this.scrollDown();
             }.context( this ),
         
-            function(){
+            function() {
                 $( this.down ).css( 'opacity', '0.1' );
                 this.scrollStop();
             }.context( this )
@@ -92,12 +94,12 @@ POSSIBILITY OF SUCH DAMAGE.
         
         // Обработка событий поподания в облать кнопки вверх 
         $( this.up ).hover(
-            function(){                          
+            function() {                          
                 $( this.up ).css( 'opacity', '0.6' );
                 this.scrollUp();
             }.context( this ),
         
-            function(){                              
+            function() {                              
                 $( this.up ).css( 'opacity', '0.1' );
                 this.scrollStop();
             }.context( this )
@@ -108,9 +110,9 @@ POSSIBILITY OF SUCH DAMAGE.
     
     // Прокрутка вверх
     Scroller.prototype.scrollUp = function () {
-          this.interval = window.setInterval( function (){ 
+          this.interval = window.setInterval( function () {
               this.delta -= this.step;
-              if( this.delta > 0 ){
+              if( ( this.delta - this.scrollButtonHeight ) > 0 ) {
                   $( this.scroll ).css( { 'margin-top' : ( this.delta * -1 ) + 'px' } );
                  } else {
                      this.scrollStop();
@@ -120,11 +122,19 @@ POSSIBILITY OF SUCH DAMAGE.
     
     // Прокрутка вниз
     Scroller.prototype.scrollDown = function () {
-        this.interval = window.setInterval( function (){ 
-             this.delta += this.step;
-             maxdelta = ( $(this.scroll).children().length * $(this.scroll).children().first().height() ) 
-                      - $(this.scroll).height();
-                  
+        this.interval = window.setInterval( function () { 
+             this.delta += this.step;                       
+             
+             var childrens_height = 0;
+             var childrens = $(this.scroll).children();
+             var childrens_count = childrens.length;
+             
+             for( var i = 0; i < childrens_count; i++ ) {
+                 childrens_height += $(childrens[i]).height();
+             }
+             
+             var maxdelta = ( childrens_height ) - $(this.scroll).height() + this.scrollButtonHeight;
+             
              if( this.delta <= maxdelta ) {
                  $(this.scroll).css( { 'margin-top' : ( this.delta * -1 ) + 'px' } );
              } else {
@@ -146,7 +156,8 @@ POSSIBILITY OF SUCH DAMAGE.
             interval       : 1,
             step           : 1.5,
             opacityInitial : '0.1',
-            opacityHover   : '0.6'
+            opacityHover   : '0.6',
+            scrollButtonHeight : 40
         };                                      
         
         // Дополнительные настройки пользователя
