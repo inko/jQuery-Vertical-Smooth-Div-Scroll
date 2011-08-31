@@ -8,9 +8,12 @@
     <script type="text/javascript" src="js/jquery.scroll.js"></script>
 
     <script type="text/javascript">
-    	$(function() {
-            $('.scroll-wrapper').scrollDiv();
-    	});
+        "use stict";
+        (function($){
+            $(function() {
+                $('.scroll-wrapper').scrollDiv();
+            });
+        })(jQuery);
     </script>
 </head>
 <body>
